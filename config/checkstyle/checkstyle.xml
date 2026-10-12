@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+    "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<!--
+  Компактный набор правил: не Google Style целиком, а то, что ловит реальные ошибки
+  и приучает к Java-конвенциям. Каждое правило можно погуглить по имени на checkstyle.org.
+-->
+<module name="Checker">
+  <property name="charset" value="UTF-8"/>
+  <property name="severity" value="error"/>
+  <property name="fileExtensions" value="java"/>
+
+  <module name="FileTabCharacter"/>
+  <module name="NewlineAtEndOfFile"/>
+  <module name="LineLength">
+    <property name="max" value="120"/>
+    <property name="ignorePattern" value="^package.*|^import.*|https?://"/>
+  </module>
+
+  <!-- Позволяет точечно отключать правило аннотацией @SuppressWarnings("checkstyle:ИмяПравила") -->
+  <module name="SuppressWarningsFilter"/>
+
+  <module name="TreeWalker">
+    <module name="SuppressWarningsHolder"/>
+
+    <!-- Импорты -->
+    <module name="AvoidStarImport"/>
+    <module name="UnusedImports"/>
+    <module name="RedundantImport"/>
+
+    <!-- Форматирование -->
+    <module name="NeedBraces"/>
+    <module name="LeftCurly"/>
+    <module name="RightCurly"/>
+    <module name="WhitespaceAround"/>
+    <module name="WhitespaceAfter"/>
+    <module name="EmptyBlock"/>
+    <module name="OneStatementPerLine"/>
+    <module name="MultipleVariableDeclarations"/>
+    <module name="ArrayTypeStyle"/>
+    <module name="UpperEll"/>
+
+    <!-- Конвенции Java, которые ломаются при переходе с Kotlin/C# -->
+    <module name="ModifierOrder"/>        <!-- public static, а не static public -->
+    <module name="RedundantModifier"/>
+    <module name="ConstantName"/>
+    <module name="LocalVariableName"/>
+    <module name="MemberName"/>
+    <module name="MethodName"/>
+    <module name="ParameterName"/>
+    <module name="TypeName"/>
+    <module name="PackageName"/>
+
+    <!-- Настоящие баги -->
+    <module name="EqualsHashCode"/>          <!-- equals без hashCode — ошибка -->
+    <module name="StringLiteralEquality"/>   <!-- "a" == s — ошибка -->
+    <module name="SimplifyBooleanExpression"/>
+    <module name="SimplifyBooleanReturn"/>
+    <module name="HideUtilityClassConstructor"/>
+    <module name="FinalClass"/>
+  </module>
+</module>
