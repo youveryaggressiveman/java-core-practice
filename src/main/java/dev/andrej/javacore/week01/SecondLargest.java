@@ -1,8 +1,6 @@
 package dev.andrej.javacore.week01;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Задача 1. Второй по величине элемент массива среди различных значений.
@@ -23,31 +21,32 @@ public final class SecondLargest {
      * @throws IllegalArgumentException если различных значений меньше двух
      */
     public static int find(int[] nums) {
-        if(nums == null)
-            throw new NullPointerException("nums is null");
+        Objects.requireNonNull(nums, "nums");
 
-        if(nums.length <= 1){
-            throw new IllegalArgumentException("nums length is less than 1");
+        if (nums.length <= 1) {
+            throw new IllegalArgumentException("nums length is less than 2");
         }
 
-        ArrayList<Integer> mas = new ArrayList<>();
+        int max = nums[0];
+        int second = 0;
 
-        var max = Arrays.stream(nums).max().getAsInt();
-        var value = Integer.MIN_VALUE;
-        for(Integer num : nums) {
-            if (num < max &&  num > value) {
-                value = num;
+        boolean secondFound = false;
+
+        for (int num : nums) {
+            if (num > max) {
+                second = max;
+                max = num;
+                secondFound = true;
+            } else if (num < max && (!secondFound || num > second)) {
+                second = num;
+                secondFound = true;
             }
-
-            if(!mas.contains(num)){
-                mas.add(num);
-            }
         }
 
-        if(mas.size() < 2) {
-            throw new IllegalArgumentException("different size is lower than 2");
+        if (!secondFound) {
+            throw new IllegalArgumentException("no second largest");
         }
 
-        return value;
+        return second;
     }
 }
